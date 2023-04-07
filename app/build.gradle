@@ -122,5 +122,5 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
     implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
 
-
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 }
