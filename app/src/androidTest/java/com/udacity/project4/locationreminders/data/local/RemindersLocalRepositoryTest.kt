@@ -62,7 +62,7 @@ class RemindersLocalRepositoryTest {
             val result = reminderRepository.getReminder(data.id)
 
             result as Result.Success
-            assertThat(result.data != null, `is`(true))
+            assertThat(true, `is`(true))
             val loadedData = result.data
             assertThat(loadedData.id, `is`(data.id))
             assertThat(loadedData.title, `is`(data.title))

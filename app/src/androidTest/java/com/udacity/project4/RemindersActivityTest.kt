@@ -37,18 +37,11 @@ import org.koin.test.get
 @LargeTest
 //END TO END test to black box test the app
 class RemindersActivityTest :
-    AutoCloseKoinTest() {// Extended Koin Test - embed autoclose @after method to close Koin after every test
-
+    AutoCloseKoinTest() {
     private lateinit var repository: ReminderDataSource
     private lateinit var appContext: Application
     private val dataBindingIdlingResource = DataBindingIdlingResource()
 
-    /**
-     * As we use Koin as a Service Locator Library to develop our code, we'll also use Koin to test our code.
-     * at this step we will initialize Koin related code to be able to use it in out testing.
-     */
-
-    // provides reference to activity from activity scenario
     private fun getActivity(activityScenario: ActivityScenario<RemindersActivity>): Activity? {
         var activity: Activity? = null
         activityScenario.onActivity {
@@ -59,7 +52,7 @@ class RemindersActivityTest :
 
     @Before
     fun init() {
-        stopKoin()//stop the original app koin
+        stopKoin()
         appContext = getApplicationContext()
         val myModule = module {
             viewModel {
@@ -77,59 +70,57 @@ class RemindersActivityTest :
             single { RemindersLocalRepository(get()) as ReminderDataSource }
             single { LocalDB.createRemindersDao(appContext) }
         }
-        //declare a new koin module
         startKoin {
             modules(listOf(myModule))
         }
-        //Get our real repository
         repository = get()
 
-        //clear the data to start fresh
         runBlocking {
             repository.deleteAllReminders()
         }
     }
-    //Idling resources tell that the app is idle or busy
+
     @Before
     fun registerIdlingResource() {
         IdlingRegistry.getInstance().register(dataBindingIdlingResource)
     }
 
-    //Unregister your idling resource so it can be garbage collected and does not leak any memory.
     @After
     fun unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
     }
 
     @Test
-    fun addingNewReminderFlow_givenValidForm_showsSuccessMessageAndNewReminderInReminderList() = runBlocking {
-        val activityScenario = ActivityScenario.launch(RemindersActivity::class.java)
-        dataBindingIdlingResource.monitorActivity(activityScenario)
+    fun addingNewReminderFlow_givenValidForm_showsSuccessMessageAndNewReminderInReminderList() =
+        runBlocking {
+            val activityScenario = ActivityScenario.launch(RemindersActivity::class.java)
+            dataBindingIdlingResource.monitorActivity(activityScenario)
 
-        val activity = getActivity(activityScenario)!!
+            val activity = getActivity(activityScenario)!!
 
-        Espresso.onView(ViewMatchers.withId(R.id.addReminderFAB)).perform(ViewActions.click())
-        Espresso.onView(ViewMatchers.withId(R.id.reminderTitle))
-            .perform(ViewActions.replaceText("Title todo"))
-        Espresso.onView(ViewMatchers.withId(R.id.reminderDescription))
-            .perform(ViewActions.replaceText("Description todo"))
-        Espresso.onView(ViewMatchers.withId(R.id.selectLocation)).perform(ViewActions.click())
-        Espresso.onView(ViewMatchers.withId(R.id.selected_location))
-            .perform(ViewActions.longClick())
-        Espresso.onView(ViewMatchers.withId(R.id.button_save_location)).perform(ViewActions.click())
-        Espresso.onView(ViewMatchers.withId(R.id.saveReminder)).perform(ViewActions.click())
+            Espresso.onView(ViewMatchers.withId(R.id.addReminderFAB)).perform(ViewActions.click())
+            Espresso.onView(ViewMatchers.withId(R.id.reminderTitle))
+                .perform(ViewActions.replaceText("Title todo"))
+            Espresso.onView(ViewMatchers.withId(R.id.reminderDescription))
+                .perform(ViewActions.replaceText("Description todo"))
+            Espresso.onView(ViewMatchers.withId(R.id.selectLocation)).perform(ViewActions.click())
+            Espresso.onView(ViewMatchers.withId(R.id.selected_location))
+                .perform(ViewActions.longClick())
+            Espresso.onView(ViewMatchers.withId(R.id.button_save_location))
+                .perform(ViewActions.click())
+            Espresso.onView(ViewMatchers.withId(R.id.saveReminder)).perform(ViewActions.click())
 
-        Espresso.onView(ViewMatchers.withText(R.string.reminder_saved))
-            .inRoot(RootMatchers.withDecorView(CoreMatchers.not(CoreMatchers.`is`(activity.window.decorView))))
-            .check(
-                ViewAssertions.matches(
-                    ViewMatchers.isDisplayed()
+            Espresso.onView(ViewMatchers.withText(R.string.reminder_saved))
+                .inRoot(RootMatchers.withDecorView(CoreMatchers.not(CoreMatchers.`is`(activity.window.decorView))))
+                .check(
+                    ViewAssertions.matches(
+                        ViewMatchers.isDisplayed()
+                    )
                 )
-            )
-        Espresso.onView(ViewMatchers.withText("Title todo"))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        activityScenario.close()
-    }
+            Espresso.onView(ViewMatchers.withText("Title todo"))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            activityScenario.close()
+        }
 
     @Test
     fun addingNewReminderFlow_givenInvalidForm_showsErrorMessage() = runBlocking {

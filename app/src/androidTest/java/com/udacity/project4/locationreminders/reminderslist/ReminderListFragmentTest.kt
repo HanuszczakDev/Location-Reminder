@@ -50,7 +50,7 @@ class ReminderListFragmentTest {
 
     @Before
     fun initRepository() {
-        stopKoin() // stop the original app koin
+        stopKoin()
         application = getApplicationContext()
         val myModule = module {
             viewModel {
