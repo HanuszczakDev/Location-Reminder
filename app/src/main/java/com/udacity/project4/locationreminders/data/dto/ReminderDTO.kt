@@ -26,14 +26,3 @@ data class ReminderDTO(
     @ColumnInfo(name = "longitude") var longitude: Double?,
     @PrimaryKey @ColumnInfo(name = "entry_id") val id: String = UUID.randomUUID().toString()
 )
-
-fun ReminderDataItem.toReminderDTO(): ReminderDTO {
-    return ReminderDTO(
-        title = title,
-        description = description,
-        location = location,
-        latitude = latitude,
-        longitude = longitude,
-        id = id
-    )
-}

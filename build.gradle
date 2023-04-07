@@ -34,8 +34,8 @@ ext {
     // Sdk and tools
     // Support library and architecture components support minSdk 14 and above.
     minSdkVersion = 16
-    targetSdkVersion = 33
-    compileSdkVersion = 33
+    targetSdkVersion = 30
+    compileSdkVersion = 30
 
     // App dependencies
     androidXVersion = '1.0.0'
@@ -55,7 +55,7 @@ ext {
     koinVersion = '2.0.1'
     truthVersion = '0.44'
     junitVersion = '4.12'
-    androidXTestCoreVersion = '1.2.0-beta01'
+    androidXTestCoreVersion = '1.4.0'
     robolectricVersion = '4.3-beta-1'
     androidXTestExtKotlinRunnerVersion = '1.1.1'
     archTestingVersion = '2.0.0'
