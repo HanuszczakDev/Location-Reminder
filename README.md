@@ -60,15 +60,13 @@ It should first ask the user's location access permission to show his/her curren
 
 ![Map View Screen](images/MapView.png)
 
-### Reminders
-
-- Reminder creation
+### Reminder Creation
 
 ![Reminder creation](images/ReminderCreation.png)
 
 ![Reminder screen](images/RemindersScreen.png)
 
-- Reminder notification
+### Reminder notification
 
 For each reminder, geofencing request is created in the background. It firess up a notification when the user enters the geofencing area.
 
@@ -87,9 +85,8 @@ App includes Espresso and Mockito to test the app UI (each screen of the app) an
 Instrumented Tests
 
 ![Instrumented Tests](images/InstrumentedTests.gif)
-![Instrumented Tests](images/InstrumentedTestResults.png)
+![Instrumented Tests Results](images/InstrumentedTestResults.png)
 
 Unit Tests
 
-![Instrumented Tests](images/UnitTestResults.png)
-
+![Unit Tests Results](images/UnitTestsResults.png)
