@@ -1,5 +1,7 @@
 # Location Reminder 🗺️
 
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
+
 In this project, I created a TODO list app with location reminders that remind the user to do something when the user is at a specific location. The app will require the user to create an account and login to set and access reminders.
 
 App was created as the project for the Udacity nanodegree Android Kotlin Developer program.
